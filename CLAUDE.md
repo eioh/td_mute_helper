@@ -7,21 +7,22 @@ TamperMonkey用スクリプト
 TamperMokey側の記述は以下の通り。
 ``` js
 // ==UserScript==
-// @name td\mute\helper
+// @name td_mute_helper
 // @namespace http://tampermonkey.net/
-// @version 0.1
+// @version <version>
 // @description try to take over the world!
 // @author You
 // @match https://tweetdeck.twitter.com
 // @match https://twitter.com/i/tweetdeck
 // @match https://x.com/i/tweetdeck
-// @require path/to/main.js
+// @updateURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/main.js
+// @downloadURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/main.js
 // ==/UserScript==
 ```
 
 ## 主要関数
 - `addMuteFilter(word)`: URL/正規表現/ユーザーパターンを処理してミュートフィルターを追加
-- `removePicture(num)`: フィルター一括削除（20秒間隔）
+- `removeMuteFilters(num)`: フィルター一括削除（20秒間隔）
 - `getDuplication()`: 重複フィルター検索
 
 ## 実行環境

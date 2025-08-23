@@ -1,19 +1,7 @@
 // Simple test for detectMutePattern function
 
-// Extract the function for testing
-function detectMutePattern(word) {
-	if (word.match(/https?:\/\/t\.co\/(.+)/)) {
-		return 'url';
-	} else if (word.match(/^\/.+\/$/)) {
-		return 'regex';
-	} else if (word.match(/^@@.+/)) {
-		return 'userKeyword';
-	} else if (word.match(/^@.+/)) {
-		return 'userRegex';
-	} else {
-		return 'phrase';
-	}
-}
+// Import the function from main.js
+const { detectMutePattern } = require('./main.js');
 
 // Test cases
 const tests = [

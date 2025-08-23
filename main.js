@@ -116,7 +116,7 @@ async function addMuteFilter(word) {
 	}
 }
 
-function removePicture(num) {
+function removeMuteFilters(num) {
 	if(num <= 0) return;
 
 	try {
@@ -136,7 +136,7 @@ function removePicture(num) {
 		TD.controller.filterManager.removeFilter(r)
 
 		setTimeout(function(){
-			removePicture(num-1)
+			removeMuteFilters(num-1)
 		}, DELAY_BETWEEN_OPERATIONS)
 	} catch (error) {
 		showError(`フィルター削除に失敗しました (残り${num}個)`, error);
@@ -183,10 +183,15 @@ setTimeout(function() {
 		element.addEventListener('contextmenu', function(e) {
 			var res = window.prompt("削除する数を入力");
 			if (res && !isNaN(res)) {
-				removePicture(Number(res));
+				removeMuteFilters(Number(res));
 			}
 		});
 	});
 }, INITIALIZATION_DELAY);
+
+// Node.js環境でのテスト用エクスポート
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { detectMutePattern };
+}
 
 })();
