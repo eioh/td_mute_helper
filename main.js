@@ -18,38 +18,74 @@ function MutePhrase(key, word) {
 	TD.controller.filterManager.addFilter(key, word);
 }
 
-
-async function MutePicture(word) {
-	var m = word.match(/https?:\/\/t\.co\/(.+)/);
-	// mute image
-	if( m ) {
-		//console.log(m[1]);
-		if ( m[1].length > 0 ) {
-			MutePhrase('phrase', m[1]);
-		}
-	} else if ( word.match(/^\/.+\/$/) ) {
-		const r = word.match(/^\/(.+)\/$/)[1];
-		//console.log(r);
-		MutePhrase('BTD_regex', r);
-	} else if ( word.match(/^@@.+/) ) {
-		const r = word.match(/^@@(.+)/)[1];
-		MutePhrase('BTD_mute_user_keyword', r);
-    } else if ( word.match(/^@.+/) ) {
-        const dup = getDuplication()
-        if (dup.length > 0) {
-            TD.controller.filterManager.removeFilter(dup[0])
-            //console.log(dup[0])
-            await sleep(DELAY_BETWEEN_OPERATIONS)
-        }
-		const r = word.match(/^@(.+)/)[1];
-        //console.log(r)
-
-		MutePhrase('BTD_user_regex', r);
+function detectMutePattern(word) {
+	if (word.match(/https?:\/\/t\.co\/(.+)/)) {
+		return 'url';
+	} else if (word.match(/^\/.+\/$/)) {
+		return 'regex';
+	} else if (word.match(/^@@.+/)) {
+		return 'userKeyword';
+	} else if (word.match(/^@.+/)) {
+		return 'userRegex';
 	} else {
-		MutePhrase('phrase', word);
+		return 'phrase';
 	}
+}
 
-    return true;
+function muteUrl(word) {
+	const match = word.match(/https?:\/\/t\.co\/(.+)/);
+	if (match && match[1].length > 0) {
+		MutePhrase('phrase', match[1]);
+	}
+}
+
+function muteRegex(word) {
+	const regex = word.match(/^\/(.+)\/$/)[1];
+	MutePhrase('BTD_regex', regex);
+}
+
+function muteUserKeyword(word) {
+	const keyword = word.match(/^@@(.+)/)[1];
+	MutePhrase('BTD_mute_user_keyword', keyword);
+}
+
+async function muteUserRegex(word) {
+	const dup = getDuplication();
+	if (dup.length > 0) {
+		TD.controller.filterManager.removeFilter(dup[0]);
+		await sleep(DELAY_BETWEEN_OPERATIONS);
+	}
+	const username = word.match(/^@(.+)/)[1];
+	MutePhrase('BTD_user_regex', username);
+}
+
+function mutePhrase(word) {
+	MutePhrase('phrase', word);
+}
+
+async function addMuteFilter(word) {
+	const pattern = detectMutePattern(word);
+	
+	switch (pattern) {
+		case 'url':
+			muteUrl(word);
+			break;
+		case 'regex':
+			muteRegex(word);
+			break;
+		case 'userKeyword':
+			muteUserKeyword(word);
+			break;
+		case 'userRegex':
+			await muteUserRegex(word);
+			break;
+		case 'phrase':
+		default:
+			mutePhrase(word);
+			break;
+	}
+	
+	return true;
 }
 
 function removePicture(num) {
@@ -89,7 +125,7 @@ setTimeout(function() {
 		    var len = TD.controller.filterManager.getAll().length;
 		    var res = window.prompt("入力(" + len + ")");
 		    if (res && res.length > 0) {
-			    MutePicture(res).then(v => {});
+			    addMuteFilter(res).then(v => {});
 		    }
 	    }).on('contextmenu', function(e) {
 	        var res = window.prompt("削除する数を入力");
