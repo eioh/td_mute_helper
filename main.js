@@ -1,18 +1,20 @@
 // ==UserScript==
 // @name td_mute_helper
 // @namespace http://tampermonkey.net/
-// @version 0.2
+// @version 0.3
 // @description try to take over the world!
 // @author You
 // @match https://tweetdeck.twitter.com
 // @match https://twitter.com/i/tweetdeck
 // @match https://x.com/i/tweetdeck
-// @require https://raw.githubusercontent.com/eioh/td_mute_helper/main/main.js
+// @updateURL   https://raw.githubusercontent.com/eioh/td_mute_helper/main/main.js
+// @downloadURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/main.js
 // ==/UserScript==
 
 (function() {
 'use strict';
 
+const VERSION = '0.3';
 const DELAY_BETWEEN_OPERATIONS = 20 * 1000; // 20秒
 const INITIALIZATION_DELAY = 30 * 1000; // 30秒
 
@@ -162,6 +164,7 @@ function getDuplication() {
 
 setTimeout(function() {
 	console.log("loaded");
+	console.log(`[TD Mute Helper] version ${VERSION} loaded`)
 
 	// jQuery の $('.visible-in-contracted-header') をネイティブJSに置換
 	const elements = document.querySelectorAll('.visible-in-contracted-header');
