@@ -1,3 +1,15 @@
+// ==UserScript==
+// @name td_mute_helper
+// @namespace http://tampermonkey.net/
+// @version 0.2
+// @description try to take over the world!
+// @author You
+// @match https://tweetdeck.twitter.com
+// @match https://twitter.com/i/tweetdeck
+// @match https://x.com/i/tweetdeck
+// @require https://raw.githubusercontent.com/eioh/td_mute_helper/main/main.js
+// ==/UserScript==
+
 (function() {
 'use strict';
 
@@ -75,7 +87,7 @@ function mutePhrase(word) {
 async function addMuteFilter(word) {
 	try {
 		const pattern = detectMutePattern(word);
-		
+
 		switch (pattern) {
 			case 'url':
 				muteUrl(word);
@@ -94,7 +106,7 @@ async function addMuteFilter(word) {
 				mutePhrase(word);
 				break;
 		}
-		
+
 		return true;
 	} catch (error) {
 		showError(`ミュートフィルター追加処理でエラーが発生しました: "${word}"`, error);
@@ -104,23 +116,23 @@ async function addMuteFilter(word) {
 
 function removePicture(num) {
 	if(num <= 0) return;
-	
+
 	try {
 		var all = TD.controller.filterManager.getAll()
 		var words = all.filter(function(v) {
 			return v.type == "phrase"// && v.value.match(/^[a-zA-Z0-9]{10}$/)
 		})
-		
+
 		if (words.length === 0) {
 			console.log('削除対象のフィルターがありません');
 			return;
 		}
-		
+
 		var r = words[0]
 		console.log(num)
 		console.log(words.length + "/" + all.length)
 		TD.controller.filterManager.removeFilter(r)
-		
+
 		setTimeout(function(){
 			removePicture(num-1)
 		}, DELAY_BETWEEN_OPERATIONS)
@@ -150,10 +162,10 @@ function getDuplication() {
 
 setTimeout(function() {
 	console.log("loaded");
-	
+
 	// jQuery の $('.visible-in-contracted-header') をネイティブJSに置換
 	const elements = document.querySelectorAll('.visible-in-contracted-header');
-	
+
 	elements.forEach(element => {
 		// クリックイベント
 		element.addEventListener('click', function(e) {
@@ -163,7 +175,7 @@ setTimeout(function() {
 				addMuteFilter(res).then(v => {});
 			}
 		});
-		
+
 		// 右クリック（コンテキストメニュー）イベント
 		element.addEventListener('contextmenu', function(e) {
 			var res = window.prompt("削除する数を入力");
