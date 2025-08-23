@@ -15,7 +15,6 @@ TamperMokey側の記述は以下の通り。
 // @match https://tweetdeck.twitter.com
 // @match https://twitter.com/i/tweetdeck
 // @match https://x.com/i/tweetdeck
-// @require https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js
 // @require path/to/main.js
 // ==/UserScript==
 ```
@@ -27,7 +26,7 @@ TamperMokey側の記述は以下の通り。
 
 ## 実行環境
 - TweetDeckの`TD.controller.filterManager`に依存
-- jQuery使用、日本語UI
+- 日本語UI
 
 ## AI回答設定
 - 日本語で回答すること

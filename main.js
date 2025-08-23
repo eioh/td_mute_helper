@@ -150,19 +150,28 @@ function getDuplication() {
 
 setTimeout(function() {
 	console.log("loaded");
-	$('.visible-in-contracted-header')
-		.on('click', function(e) {
-		    var len = TD.controller.filterManager.getAll().length;
-		    var res = window.prompt("入力(" + len + ")");
-		    if (res && res.length > 0) {
-			    addMuteFilter(res).then(v => {});
-		    }
-	    }).on('contextmenu', function(e) {
-	        var res = window.prompt("削除する数を入力");
-		    if (res && !isNaN(res)) {
-			    removePicture(Number(res));
-		    }
-	    });
+	
+	// jQuery の $('.visible-in-contracted-header') をネイティブJSに置換
+	const elements = document.querySelectorAll('.visible-in-contracted-header');
+	
+	elements.forEach(element => {
+		// クリックイベント
+		element.addEventListener('click', function(e) {
+			var len = TD.controller.filterManager.getAll().length;
+			var res = window.prompt("入力(" + len + ")");
+			if (res && res.length > 0) {
+				addMuteFilter(res).then(v => {});
+			}
+		});
+		
+		// 右クリック（コンテキストメニュー）イベント
+		element.addEventListener('contextmenu', function(e) {
+			var res = window.prompt("削除する数を入力");
+			if (res && !isNaN(res)) {
+				removePicture(Number(res));
+			}
+		});
+	});
 }, INITIALIZATION_DELAY);
 
 })();
