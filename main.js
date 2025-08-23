@@ -12,13 +12,6 @@ function showError(message, error) {
 	alert(`エラーが発生しました: ${message}`);
 }
 
-let mObserver = new MutationObserver(function (mutations) {
-	for (let tweet of document.querySelectorAll('article.stream-item.js-stream-item')) {
-		const userName = tweet?.querySelector('span.username.txt-mute')?.innerHTML?.replace(/^@/, "") ?? ""
-
-	}
-})
-mObserver.observe(document.body, { subtree: true, childList: true, characterData: true });
 
 function MutePhrase(key, word) {
 	try {
