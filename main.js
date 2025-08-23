@@ -18,8 +18,18 @@ const VERSION = '0.4';
 const DELAY_BETWEEN_OPERATIONS = 20 * 1000; // 20秒
 const INITIALIZATION_DELAY = 30 * 1000; // 30秒
 
+/**
+ * 指定したミリ秒だけ処理を停止する
+ * @param {number} ms - 停止する時間（ミリ秒）
+ * @returns {Promise<void>} 指定時間後にresolveされるPromise
+ */
 const sleep = ms => new Promise(res => setTimeout(res, ms))
 
+/**
+ * エラーメッセージをコンソールとアラートで表示する
+ * @param {string} message - 表示するエラーメッセージ
+ * @param {Error} error - エラーオブジェクト
+ */
 function showError(message, error) {
 	console.error(`[TD Mute Helper] ${message}:`, error);
 	// ユーザーには簡潔なメッセージを表示
@@ -27,6 +37,12 @@ function showError(message, error) {
 }
 
 
+/**
+ * TweetDeckのフィルターマネージャーにミュートフィルターを追加する
+ * @param {string} key - フィルターのタイプ（'phrase', 'BTD_regex', 'BTD_user_regex'など）
+ * @param {string} word - フィルターする内容
+ * @returns {boolean} フィルター追加の成功可否
+ */
 function MutePhrase(key, word) {
 	try {
 		TD.controller.filterManager.addFilter(key, word);
@@ -37,6 +53,11 @@ function MutePhrase(key, word) {
 	return true;
 }
 
+/**
+ * 入力されたワードからミュートパターンの種類を判定する
+ * @param {string} word - 判定対象のワード
+ * @returns {string} パターンタイプ（'url', 'regex', 'userKeyword', 'userRegex', 'phrase'）
+ */
 function detectMutePattern(word) {
 	if (word.match(/https?:\/\/t\.co\/(.+)/)) {
 		return 'url';
@@ -51,6 +72,10 @@ function detectMutePattern(word) {
 	}
 }
 
+/**
+ * t.coのURLをミュートフィルターに追加する
+ * @param {string} word - https://t.co/形式のURL
+ */
 function muteUrl(word) {
 	const match = word.match(/https?:\/\/t\.co\/(.+)/);
 	if (match && match[1].length > 0) {
@@ -58,16 +83,29 @@ function muteUrl(word) {
 	}
 }
 
+/**
+ * 正規表現パターンをミュートフィルターに追加する
+ * @param {string} word - /pattern/形式の正規表現
+ */
 function muteRegex(word) {
 	const regex = word.match(/^\/(.+)\/$/)[1];
 	MutePhrase('BTD_regex', regex);
 }
 
+/**
+ * ユーザーキーワードをミュートフィルターに追加する
+ * @param {string} word - @@username形式のキーワード
+ */
 function muteUserKeyword(word) {
 	const keyword = word.match(/^@@(.+)/)[1];
 	MutePhrase('BTD_mute_user_keyword', keyword);
 }
 
+/**
+ * ユーザー名の正規表現パターンをミュートフィルターに追加する
+ * 重複があれば先に削除してから追加
+ * @param {string} word - @username形式のパターン
+ */
 async function muteUserRegex(word) {
 	const dup = getDuplication();
 	if (dup.length > 0) {
@@ -82,10 +120,19 @@ async function muteUserRegex(word) {
 	MutePhrase('BTD_user_regex', username);
 }
 
+/**
+ * 通常のフレーズをミュートフィルターに追加する
+ * @param {string} word - ミュートするフレーズ
+ */
 function mutePhrase(word) {
 	MutePhrase('phrase', word);
 }
 
+/**
+ * 入力されたワードを解析し、適切なミュートフィルターを追加する
+ * @param {*} word - ミュートするワード
+ * @returns {Promise<boolean>} フィルター追加の成功可否
+ */
 async function addMuteFilter(word) {
 	try {
 		const pattern = detectMutePattern(word);
@@ -116,6 +163,11 @@ async function addMuteFilter(word) {
 	}
 }
 
+/**
+ * 指定された数だけミュートフィルターを削除する
+ * @param {*} num - 削除するフィルターの数
+ * @returns {void}
+ */
 function removeMuteFilters(num) {
 	if(num <= 0) return;
 
@@ -143,6 +195,10 @@ function removeMuteFilters(num) {
 	}
 }
 
+/**
+ * 重複しているミュートフィルターを取得する
+ * @returns {Array} 重複しているフィルターのリスト
+ */
 function getDuplication() {
     try {
         const list = TD.controller.filterManager.getAll();
