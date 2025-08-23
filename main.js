@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name td_mute_helper
 // @namespace http://tampermonkey.net/
-// @version 0.3
+// @version 0.4
 // @description try to take over the world!
 // @author You
 // @match https://tweetdeck.twitter.com
@@ -14,7 +14,7 @@
 (function() {
 'use strict';
 
-const VERSION = '0.3';
+const VERSION = '0.4';
 const DELAY_BETWEEN_OPERATIONS = 20 * 1000; // 20秒
 const INITIALIZATION_DELAY = 30 * 1000; // 30秒
 
