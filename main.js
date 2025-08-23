@@ -134,3 +134,5 @@ setTimeout(function() {
 		    }
 	    });
 }, INITIALIZATION_DELAY);
+
+})();
