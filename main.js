@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name td_mute_helper
 // @namespace http://tampermonkey.net/
-// @version 0.4
+// @version 0.5
 // @description try to take over the world!
 // @author You
 // @match https://tweetdeck.twitter.com
@@ -10,7 +10,7 @@
 // @updateURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/main.js
 // @downloadURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/main.js
 // ==/UserScript==
-(()=>{var G=Object.defineProperty;var l=(e,t)=>()=>(e&&(t=e(e=0)),t);var J=(e,t)=>()=>(t||e((t={exports:{}}).exports,t),t.exports),h=(e,t)=>{for(var o in t)G(e,o,{get:t[o],enumerable:!0})};var N={};h(N,{DELAY_BETWEEN_OPERATIONS:()=>y,INITIALIZATION_DELAY:()=>v,VERSION:()=>b});var b,y,v,p=l(()=>{b="0.4",y=2e4,v=3e4});function L(){let e=`
+(()=>{var G=Object.defineProperty;var l=(e,t)=>()=>(e&&(t=e(e=0)),t);var J=(e,t)=>()=>(t||e((t={exports:{}}).exports,t),t.exports),h=(e,t)=>{for(var o in t)G(e,o,{get:t[o],enumerable:!0})};var N={};h(N,{DELAY_BETWEEN_OPERATIONS:()=>y,INITIALIZATION_DELAY:()=>v,VERSION:()=>b});var b,y,v,p=l(()=>{b="0.5",y=2e4,v=3e4});function L(){let e=`
         .td-dialog-overlay {
             position: fixed;
             top: 0;

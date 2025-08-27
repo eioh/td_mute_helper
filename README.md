@@ -189,5 +189,5 @@ MIT License
 
 ---
 
-**Version**: 0.4  
+**Version**: 0.5  
 **Last Updated**: 2024
