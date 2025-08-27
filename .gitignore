@@ -1,37 +1,25 @@
-# IDE/Editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# Build outputs
+dist/
+*.backup.js
 
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-desktop.ini
+# Dependencies
+node_modules/
 
 # Logs
 *.log
 npm-debug.log*
 
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
 # Temporary files
 *.tmp
 *.temp
-
-# Node.js (if needed in future)
-node_modules/
-npm-debug.log
-yarn-error.log
-
-# UserScript development files
-*.user.js.bak
-*.backup
-
-# Claude/AI assistant files
-.claude/
-.serena/

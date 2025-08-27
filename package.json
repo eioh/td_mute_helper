@@ -1,0 +1,26 @@
+{
+  "name": "td_mute_helper",
+  "version": "0.4.0",
+  "description": "TweetDeck mute helper TamperMonkey script",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node build.js --mode=dev",
+    "build": "node build.js --mode=prod",
+    "deploy": "cp dist/main.js main.js",
+    "backup": "cp main.js main.backup.js",
+    "clean": "rm -rf dist/*",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "tampermonkey",
+    "userscript",
+    "tweetdeck",
+    "mute",
+    "filter"
+  ],
+  "author": "You",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.19.0"
+  }
+}
