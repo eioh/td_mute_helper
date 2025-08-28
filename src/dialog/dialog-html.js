@@ -44,9 +44,10 @@ export function createDialogHTML() {
                             </div>
                             <div class="tab-content" id="user-keyword-tab">
                                 <p class="td-dialog-message">特定ユーザーのキーワードをミュートします<br>
-                                例: username<br>
-                                <small>※ @マークは不要です</small></p>
-                                <input type="text" class="td-dialog-input" id="user-keyword-input" placeholder="ユーザー名を入力してください" autocomplete="off" data-lpignore="true" data-form-type="other" data-1p-ignore>
+                                形式: "ユーザー名|キーワード"<br>
+                                例: "spamuser|広告", "botname|宣伝"<br>
+                                <small>※ @マークは不要です。必ず「|」で区切ってください</small></p>
+                                <input type="text" class="td-dialog-input" id="user-keyword-input" placeholder="ユーザー名|キーワード" autocomplete="off" data-lpignore="true" data-form-type="other" data-1p-ignore>
                             </div>
                             <div class="tab-content" id="user-regex-tab">
                                 <p class="td-dialog-message">特定ユーザーを正規表現でミュートします<br>

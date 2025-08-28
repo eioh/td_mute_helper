@@ -78,9 +78,15 @@ export function showCustomDialog () {
         case 'phrase':
         case 'regex':
         case 'url':
-        case 'user-keyword':
         case 'user-regex':
           return value.trim() !== ''
+        case 'user-keyword':
+          const trimmed = value.trim()
+          if (trimmed === '' || !trimmed.includes('|')) {
+            return false
+          }
+          const parts = trimmed.split('|')
+          return parts.length === 2 && parts[0].trim() !== '' && parts[1].trim() !== ''
         case 'remove':
           return value.trim() !== '' && !isNaN(Number(value)) && Number(value) > 0
         default:
@@ -174,7 +180,7 @@ export function showCustomDialog () {
  * 統合ダイアログを表示し、結果を取得する
  * @returns {Promise<{action: 'add'|'remove', value: string|number}>} アクション結果のPromise
  */
-export async function showMuteDialog() {
+export async function showMuteDialog () {
   console.log('[TD Mute Helper] showMuteDialog called')
   try {
     const result = await showCustomDialog()
