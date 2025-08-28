@@ -16,34 +16,50 @@ import {
  */
 export async function addMuteFilter(word, type = null) {
   try {
-    // 新しいタブシステムからtypeが指定されている場合はそれを使用
-    // 指定されていない場合は従来の自動判定を使用（後方互換性のため）
-    let pattern
+    // 新しいタブシステムからtypeが指定されている場合は直接処理
     if (type) {
-      pattern = type === 'user-keyword' ? 'userKeyword' 
-              : type === 'user-regex' ? 'userRegex' 
-              : type
+      switch (type) {
+        case 'phrase':
+          mutePhrase(word)
+          break
+        case 'regex':
+          muteRegex(word)
+          break
+        case 'url':
+          muteUrl(word)
+          break
+        case 'user-keyword':
+          muteUserKeyword(word)
+          break
+        case 'user-regex':
+          await muteUserRegex(word)
+          break
+        default:
+          mutePhrase(word)
+          break
+      }
     } else {
-      pattern = detectMutePattern(word)
-    }
+      // 従来の自動判定を使用（後方互換性のため）
+      const pattern = detectMutePattern(word)
 
-    switch (pattern) {
-      case 'url':
-        muteUrl(word)
-        break
-      case 'regex':
-        muteRegex(word)
-        break
-      case 'userKeyword':
-        muteUserKeyword(word)
-        break
-      case 'userRegex':
-        await muteUserRegex(word)
-        break
-      case 'phrase':
-      default:
-        mutePhrase(word)
-        break
+      switch (pattern) {
+        case 'url':
+          muteUrl(word)
+          break
+        case 'regex':
+          muteRegex(word)
+          break
+        case 'userKeyword':
+          muteUserKeyword(word)
+          break
+        case 'userRegex':
+          await muteUserRegex(word)
+          break
+        case 'phrase':
+        default:
+          mutePhrase(word)
+          break
+      }
     }
 
     return true
