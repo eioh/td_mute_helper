@@ -156,12 +156,11 @@ export function showCustomDialog () {
     cancelButton.addEventListener('click', cancelAction)
     closeButton.addEventListener('click', cancelAction)
 
-    // 全ての入力フィールドにキーボード操作を追加
+    // 全ての入力フィールドにキーボード操作を追加（Escapeのみ）
     Object.values(inputs).forEach(input => {
       if (input) {
         input.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') confirmAction()
-          else if (e.key === 'Escape') cancelAction()
+          if (e.key === 'Escape') cancelAction()
         })
       }
     })
