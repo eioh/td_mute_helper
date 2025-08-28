@@ -3,6 +3,7 @@
   "version": "0.5.0",
   "description": "TweetDeck mute helper TamperMonkey script",
   "main": "dist/main.js",
+  "type": "module",
   "scripts": {
     "dev": "node build.js --mode=dev",
     "build": "node build.js --mode=prod",
