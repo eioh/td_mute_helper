@@ -1,13 +1,10 @@
 import { createDialogHTML } from './dialog-html.js'
 
 /**
- * カスタムダイアログを表示し、ユーザー入力を取得する
- * @param {string} title - ダイアログのタイトル
- * @param {string} message - 表示するメッセージ
- * @param {string} inputType - 入力タイプ ('text' または 'number')
- * @returns {Promise<string|number>} 入力値のPromise
+ * タブ機能付きダイアログを表示し、ユーザー入力を取得する
+ * @returns {Promise<{action: 'add'|'remove', value: string|number}>} アクション結果のPromise
  */
-export function showCustomDialog(title, message, inputType = 'text') {
+export function showCustomDialog () {
   return new Promise((resolve, reject) => {
     // 既存のダイアログがあれば削除
     let dialog = document.getElementById('td-mute-dialog')
@@ -20,97 +17,107 @@ export function showCustomDialog(title, message, inputType = 'text') {
     document.body.appendChild(dialog)
 
     // ダイアログの各要素を取得
-    const titleElement = dialog.querySelector('.td-dialog-title')
-    const messageElement = dialog.querySelector('.td-dialog-message')
-    const inputElement = dialog.querySelector('.td-dialog-input')
     const cancelButton = dialog.querySelector('.td-dialog-cancel')
     const confirmButton = dialog.querySelector('.td-dialog-confirm')
     const closeButton = dialog.querySelector('.td-dialog-close')
+    const tabs = dialog.querySelectorAll('.td-dialog-tab')
+    const tabContents = dialog.querySelectorAll('.tab-content')
+    const addInput = dialog.querySelector('#add-input')
+    const removeInput = dialog.querySelector('#remove-input')
 
-    // タイトルとメッセージを設定
-    titleElement.textContent = title
-    messageElement.textContent = message
+    let currentTab = 'add'
 
-    // 入力タイプを設定
-    inputElement.type = inputType
-    if (inputType === 'number') {
-      inputElement.placeholder = '数値を入力してください'
-    }
+    // タブ切り替え処理
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const tabName = tab.dataset.tab
+        currentTab = tabName
+        
+        // タブの状態更新
+        tabs.forEach(t => t.classList.remove('active'))
+        tab.classList.add('active')
+        
+        // コンテンツの表示切り替え
+        tabContents.forEach(content => {
+          content.classList.remove('active')
+        })
+        dialog.querySelector(`#${tabName}-tab`).classList.add('active')
+      })
+    })
 
     // ダイアログを表示
     dialog.style.display = 'flex'
+    
+    // 最初の入力欄にフォーカス
+    setTimeout(() => addInput.focus(), 100)
 
-    // 入力フィールドにフォーカス
-    setTimeout(() => inputElement.focus(), 100)
-
-    // クリーンアップ関数
-    const cleanup = () => {
+    // 閉じる処理
+    const closeDialog = () => {
       dialog.remove()
     }
 
-    // OKボタンのイベント
-    const handleConfirm = () => {
-      const value = inputElement.value.trim()
-      if (value === '') {
-        inputElement.focus()
-        return
+    // 確定処理
+    const confirmAction = () => {
+      if (currentTab === 'add') {
+        const keyword = addInput.value.trim()
+        if (keyword === '') {
+          addInput.focus()
+          return
+        }
+        closeDialog()
+        resolve({ action: 'add', value: keyword })
+      } else if (currentTab === 'remove') {
+        const count = removeInput.value.trim()
+        if (count === '' || isNaN(Number(count)) || Number(count) <= 0) {
+          removeInput.focus()
+          return
+        }
+        closeDialog()
+        resolve({ action: 'remove', value: Number(count) })
       }
-
-      // 数値タイプの場合は数値検証
-      if (inputType === 'number' && isNaN(Number(value))) {
-        inputElement.focus()
-        return
-      }
-
-      cleanup()
-      resolve(inputType === 'number' ? Number(value) : value)
     }
 
-    // キャンセルボタンのイベント
-    const handleCancel = () => {
-      cleanup()
+    // キャンセル処理
+    const cancelAction = () => {
+      closeDialog()
       reject(new Error('User cancelled'))
     }
 
-    // イベントリスナーを設定
-    confirmButton.addEventListener('click', handleConfirm)
-    cancelButton.addEventListener('click', handleCancel)
-    closeButton.addEventListener('click', handleCancel)
+    // イベントリスナー
+    confirmButton.addEventListener('click', confirmAction)
+    cancelButton.addEventListener('click', cancelAction)
+    closeButton.addEventListener('click', cancelAction)
 
-    // Enterキーで確定、Escapeキーでキャンセル
-    inputElement.addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
-        handleConfirm()
-      } else if (e.key === 'Escape') {
-        handleCancel()
-      }
+    // キーボード操作
+    addInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') confirmAction()
+      else if (e.key === 'Escape') cancelAction()
     })
 
-    // オーバーレイクリックでキャンセル
-    dialog.addEventListener('click', e => {
-      if (e.target === dialog) {
-        handleCancel()
-      }
+    removeInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') confirmAction()
+      else if (e.key === 'Escape') cancelAction()
+    })
+
+    // オーバーレイクリックで閉じる
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) cancelAction()
     })
   })
 }
 
 /**
- * window.prompt()の代替となるカスタムダイアログ
- * @param {string} message - 表示するメッセージ
- * @param {string} defaultValue - デフォルト値
- * @param {string} inputType - 入力タイプ ('text' または 'number')
- * @returns {Promise<string|null>} 入力値またはnull（キャンセル時）
+ * 統合ダイアログを表示し、結果を取得する
+ * @returns {Promise<{action: 'add'|'remove', value: string|number}>} アクション結果のPromise
  */
-export async function customPrompt(message, defaultValue = '', inputType = 'text') {
-  console.log('[TD Mute Helper] customPrompt called with:', { message, defaultValue, inputType })
+export async function showMuteDialog() {
+  console.log('[TD Mute Helper] showMuteDialog called')
   try {
-    const result = await showCustomDialog('入力', message, inputType)
+    const result = await showCustomDialog()
     console.log('[TD Mute Helper] showCustomDialog resolved with:', result)
-    return result.toString()
+    return result
   } catch (error) {
     console.log('[TD Mute Helper] showCustomDialog rejected:', error.message)
-    // キャンセルされた場合
-    return null
+    throw error
   }
 }

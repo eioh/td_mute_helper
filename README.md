@@ -132,8 +132,8 @@ npm run deploy
 // @match https://tweetdeck.twitter.com
 // @match https://twitter.com/i/tweetdeck
 // @match https://x.com/i/tweetdeck
-// @updateURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/main.js
-// @downloadURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/main.js
+// @updateURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/dist/main.js
+// @downloadURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/dist/main.js
 // ==/UserScript==
 ```
 
@@ -189,5 +189,5 @@ MIT License
 
 ---
 
-**Version**: 0.5  
+**Version**: 0.5
 **Last Updated**: 2024

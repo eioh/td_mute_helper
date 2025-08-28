@@ -44,10 +44,10 @@ const banner = `// ==UserScript==
 // @description try to take over the world!
 // @author You
 // @match https://tweetdeck.twitter.com
-// @match https://twitter.com/i/tweetdeck  
+// @match https://twitter.com/i/tweetdeck
 // @match https://x.com/i/tweetdeck
-// @updateURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/main.js
-// @downloadURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/main.js
+// @updateURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/dist/main.js
+// @downloadURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/dist/main.js
 // ==/UserScript==`
 
 const configWithBanner = {
@@ -67,7 +67,7 @@ const configWithBanner = {
   "description": "TweetDeck mute helper TamperMonkey script",
   "scripts": {
     "dev": "node build.js --mode=dev",
-    "build": "node build.js --mode=prod", 
+    "build": "node build.js --mode=prod",
     "deploy": "cp dist/main.js main.js",
     "backup": "cp main.js main.backup.js",
     "clean": "rm -rf dist/*",
@@ -114,7 +114,7 @@ const banner = fs.readFileSync('src/userscript-header.txt', 'utf8')
 const config = {
   entryPoints: ['src/main.js'],
   bundle: true,
-  platform: 'browser', 
+  platform: 'browser',
   target: 'es2017',
   format: 'iife',
   outfile: 'dist/main.js',
