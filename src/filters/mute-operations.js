@@ -64,10 +64,21 @@ export async function addMuteFilter(word, type = null) {
 
     return true
   } catch (error) {
-    showError(
-      `ミュートフィルター追加処理でエラーが発生しました: "${word}"`,
-      error
-    )
+    // バリデーションエラーの場合は詳細なメッセージを表示
+    if (error.message.includes('形式が正しくありません') || 
+        error.message.includes('が空です') || 
+        error.message.includes('が短すぎます') ||
+        error.message.includes('が無効です') ||
+        error.message.includes('無効なURL形式') ||
+        error.message.includes('無効な正規表現')) {
+      showError('入力形式エラー', error)
+    } else {
+      // その他のエラー（システムエラーなど）
+      showError(
+        `ミュートフィルター追加処理でエラーが発生しました: "${word}"`,
+        error
+      )
+    }
     return false
   }
 }

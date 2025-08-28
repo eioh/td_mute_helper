@@ -8,7 +8,7 @@
     "dev": "node build.js --mode=dev",
     "build": "node build.js --mode=prod",
     "clean": "rm -rf dist/*",
-    "test": "node test.js"
+    "test": "node test.js && node test-validation.js"
   },
   "keywords": [
     "tampermonkey",
