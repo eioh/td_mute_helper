@@ -15,8 +15,8 @@ TamperMokey側の記述は以下の通り。
 // @match https://tweetdeck.twitter.com
 // @match https://twitter.com/i/tweetdeck
 // @match https://x.com/i/tweetdeck
-// @updateURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/main.js
-// @downloadURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/main.js
+// @updateURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/dist/main.js
+// @downloadURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/dist/main.js
 // ==/UserScript==
 ```
 
@@ -90,7 +90,7 @@ Settings > Branches > Add rule
 3. **リリースPR**: develop → main のPull Request作成
 4. **レビュー**: PR内容確認とTweetDeck環境での動作テスト
 5. **マージ**: Squash and mergeまたはMerge commit
-6. **確認**: main更新後、TamperMonkey自動更新動作確認
+6. **確認**: main更新後、TamperMonkeyが`dist/main.js`から自動更新することを確認
 
 ### 緊急時のhotfix運用
 - 本番（main）で緊急バグ発見時
