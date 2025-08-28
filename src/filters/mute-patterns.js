@@ -51,7 +51,15 @@ export function muteUrl(word) {
  * @param {string} word - /pattern/形式の正規表現
  */
 export function muteRegex(word) {
-  const regex = word.match(/^\/(.+)\/$/)[1]
+  // 新しいタブシステムから来る場合は既にスラッシュ付き（/pattern/）
+  // 従来システムから来る場合もスラッシュ付き
+  let regex
+  if (word.startsWith('/') && word.endsWith('/')) {
+    regex = word.match(/^\/(.+)\/$/)[1]
+  } else {
+    // フォールバック：スラッシュがない場合はそのまま使用
+    regex = word
+  }
   MutePhrase('BTD_regex', regex)
 }
 
@@ -60,7 +68,14 @@ export function muteRegex(word) {
  * @param {string} word - @@username形式のキーワード
  */
 export function muteUserKeyword(word) {
-  const keyword = word.match(/^@@(.+)/)[1]
+  // 新しいタブシステムから来る場合は既に適切な形式（user|keyword）
+  // 従来システムから来る場合は@@プレフィックス付き
+  let keyword
+  if (word.startsWith('@@')) {
+    keyword = word.match(/^@@(.+)/)[1]
+  } else {
+    keyword = word
+  }
   MutePhrase('BTD_mute_user_keyword', keyword)
 }
 
@@ -83,7 +98,15 @@ export async function muteUserRegex(word) {
       showError('重複フィルター削除に失敗しました', error)
     }
   }
-  const username = word.match(/^@(.+)/)[1]
+  
+  // 新しいタブシステムから来る場合は既に適切な形式
+  // 従来システムから来る場合は@プレフィックス付き
+  let username
+  if (word.startsWith('@')) {
+    username = word.match(/^@(.+)/)[1]
+  } else {
+    username = word
+  }
   MutePhrase('BTD_user_regex', username)
 }
 

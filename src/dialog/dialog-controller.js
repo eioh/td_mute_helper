@@ -99,15 +99,12 @@ export function showCustomDialog () {
       const trimmedValue = value.trim()
       switch (tab) {
         case 'phrase':
+        case 'url':
+        case 'user-keyword':
+        case 'user-regex':
           return trimmedValue
         case 'regex':
           return `/${trimmedValue}/`
-        case 'url':
-          return trimmedValue
-        case 'user-keyword':
-          return `@@${trimmedValue}`
-        case 'user-regex':
-          return `@${trimmedValue}`
         case 'remove':
           return Number(trimmedValue)
         default:
