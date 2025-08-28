@@ -20,9 +20,11 @@ export function addDialogStyles() {
             background: #15202b !important;
             border: 1px solid #38444d !important;
             border-radius: 8px !important;
-            min-width: 450px !important;
-            max-width: 550px !important;
+            min-width: 600px !important;
+            max-width: 800px !important;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+            display: flex !important;
+            flex-direction: column !important;
         }
 
         .td-dialog-container .td-dialog-header {
@@ -31,6 +33,7 @@ export function addDialogStyles() {
             align-items: center !important;
             padding: 16px 20px !important;
             border-bottom: 1px solid #38444d !important;
+            flex-shrink: 0 !important;
         }
 
         .td-dialog-container .td-dialog-title {
@@ -62,46 +65,63 @@ export function addDialogStyles() {
             color: #fff !important;
         }
 
+        /* メインコンテンツエリア（左右分割） */
+        .td-dialog-container .td-dialog-main {
+            display: flex !important;
+            flex: 1 !important;
+            min-height: 300px !important;
+        }
+
+        /* サイドバー（左側のタブ領域） */
+        .td-dialog-container .td-dialog-sidebar {
+            width: 200px !important;
+            background: #192734 !important;
+            border-right: 1px solid #38444d !important;
+            flex-shrink: 0 !important;
+        }
+
         .td-dialog-container .td-dialog-tabs {
             display: flex !important;
-            background: #192734 !important;
+            flex-direction: column !important;
             padding: 0 !important;
             margin: 0 !important;
-            position: relative !important;
-            border-radius: 0 !important;
         }
 
         .td-dialog-container .td-dialog-tab {
-            flex: 1 !important;
-            padding: 14px 20px 12px 20px !important;
+            padding: 16px 20px !important;
             background: #192734 !important;
             border: none !important;
             color: #8b98a5 !important;
             cursor: pointer !important;
             font-size: 14px !important;
             font-weight: 500 !important;
-            position: relative !important;
+            text-align: left !important;
             transition: all 0.2s ease !important;
-            border-top: 1px solid #38444d !important;
-            border-right: 1px solid #38444d !important;
-            margin-right: -1px !important;
-            z-index: 1 !important;
-            border-radius: 0 !important;
+            border-bottom: 1px solid #38444d !important;
+            position: relative !important;
             outline: none !important;
             text-decoration: none !important;
             box-shadow: none !important;
+            border-radius: 0 !important;
         }
 
         .td-dialog-container .td-dialog-tab:last-child {
-            border-right: none !important;
+            border-bottom: none !important;
         }
 
         .td-dialog-container .td-dialog-tab.active {
             background: #15202b !important;
             color: #1d9bf0 !important;
-            border-bottom: 1px solid #15202b !important;
-            z-index: 2 !important;
-            margin-bottom: -1px !important;
+        }
+
+        .td-dialog-container .td-dialog-tab.active::before {
+            content: '' !important;
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            bottom: 0 !important;
+            width: 3px !important;
+            background: #1d9bf0 !important;
         }
 
         .td-dialog-container .td-dialog-tab:hover:not(.active) {
@@ -109,18 +129,18 @@ export function addDialogStyles() {
             color: #fff !important;
         }
 
-        .td-dialog-container .td-dialog-tab:first-child {
-            border-left: 1px solid #38444d !important;
-        }
-
-        .td-dialog-container .td-dialog-tab.active:first-child {
-            border-left: 1px solid #38444d !important;
+        /* コンテンツエリア（右側の入力領域） */
+        .td-dialog-container .td-dialog-content {
+            flex: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
         }
 
         .td-dialog-container .td-dialog-body {
             padding: 20px !important;
-            border-top: 1px solid #38444d !important;
-            margin-top: -1px !important;
+            flex: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
         }
 
         .td-dialog-container .td-dialog-message {
@@ -153,6 +173,7 @@ export function addDialogStyles() {
             gap: 12px !important;
             padding: 16px 20px !important;
             border-top: 1px solid #38444d !important;
+            flex-shrink: 0 !important;
         }
 
         .td-dialog-container .td-dialog-cancel,
@@ -197,10 +218,12 @@ export function addDialogStyles() {
 
         .td-dialog-container .tab-content {
             display: none !important;
+            flex: 1 !important;
+            flex-direction: column !important;
         }
 
         .td-dialog-container .tab-content.active {
-            display: block !important;
+            display: flex !important;
         }
     `
 
