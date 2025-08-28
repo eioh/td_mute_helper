@@ -1,6 +1,6 @@
 {
   "name": "td_mute_helper",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "TweetDeck mute helper TamperMonkey script",
   "main": "dist/main.js",
   "type": "module",
@@ -8,7 +8,9 @@
     "dev": "node build.js --mode=dev",
     "build": "node build.js --mode=prod",
     "clean": "rm -rf dist/*",
-    "test": "node test.js && node test-validation.js"
+    "test": "node test.js && node test-validation.js",
+    "deploy": "cp dist/main.js main.js",
+    "backup": "cp main.js main.js.backup"
   },
   "keywords": [
     "tampermonkey",

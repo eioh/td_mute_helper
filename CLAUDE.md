@@ -21,9 +21,11 @@ TamperMokey側の記述は以下の通り。
 ```
 
 ## 主要関数
-- `addMuteFilter(word)`: URL/正規表現/ユーザーパターンを処理してミュートフィルターを追加
+- `addMuteFilter(word, type)`: 指定タイプでミュートフィルターを追加（自動判定も可能）
 - `removeMuteFilters(num)`: フィルター一括削除（20秒間隔）
 - `getDuplication()`: 重複フィルター検索
+- `showMuteDialog()`: 6タブ統合ダイアログ表示（フレーズ/正規表現/URL/ユーザーキーワード/ユーザー正規表現/削除）
+- **バリデーション関数群**: 各入力形式の妥当性検証と詳細エラーメッセージ表示
 
 ## 実行環境
 - TweetDeckの`TD.controller.filterManager`に依存
