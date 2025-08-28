@@ -29,7 +29,8 @@ export function initialize() {
           console.log('[TD Mute Helper] Dialog result:', result)
           
           if (result.action === 'add' && result.value) {
-            await addMuteFilter(result.value)
+            // 新しいタブシステムではtypeプロパティが含まれる
+            await addMuteFilter(result.value, result.type)
           } else if (result.action === 'remove' && result.value) {
             removeMuteFilters(result.value)
           }

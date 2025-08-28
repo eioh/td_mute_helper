@@ -14,9 +14,18 @@ import {
  * @param {*} word - ミュートするワード
  * @returns {Promise<boolean>} フィルター追加の成功可否
  */
-export async function addMuteFilter(word) {
+export async function addMuteFilter(word, type = null) {
   try {
-    const pattern = detectMutePattern(word)
+    // 新しいタブシステムからtypeが指定されている場合はそれを使用
+    // 指定されていない場合は従来の自動判定を使用（後方互換性のため）
+    let pattern
+    if (type) {
+      pattern = type === 'user-keyword' ? 'userKeyword' 
+              : type === 'user-regex' ? 'userRegex' 
+              : type
+    } else {
+      pattern = detectMutePattern(word)
+    }
 
     switch (pattern) {
       case 'url':
