@@ -1,7 +1,7 @@
 // Simple test for detectMutePattern function
 
 // Import the function from src/filters/mute-patterns.js
-import { detectMutePattern } from './src/filters/mute-patterns.js';
+import { detectMutePattern } from '../src/filters/mute-patterns.js';
 
 // Test cases
 const tests = [
