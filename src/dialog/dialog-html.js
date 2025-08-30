@@ -28,32 +28,32 @@ export function createDialogHTML() {
                             <div class="tab-content active" id="phrase-tab">
                                 <p class="td-dialog-message">ミュートするキーワードを入力してください<br>
                                 例: "スパム", "広告"</p>
-                                <input type="text" class="td-dialog-input" id="phrase-input" placeholder="キーワードを入力してください" autocomplete="off" data-lpignore="true" data-form-type="other" data-1p-ignore>
+                                <textarea class="td-dialog-input" id="phrase-input" placeholder="キーワードを入力してください" autocomplete="off" data-lpignore="true" data-form-type="other" data-1p-ignore rows="3"></textarea>
                             </div>
                             <div class="tab-content" id="regex-tab">
                                 <p class="td-dialog-message">正規表現パターンを入力してください<br>
                                 例: "RT.*セール", ".*限定.*"<br>
                                 <small>※ スラッシュ（/）は不要です</small></p>
-                                <input type="text" class="td-dialog-input" id="regex-input" placeholder="正規表現パターンを入力してください" autocomplete="off" data-lpignore="true" data-form-type="other" data-1p-ignore>
+                                <textarea class="td-dialog-input" id="regex-input" placeholder="正規表現パターンを入力してください" autocomplete="off" data-lpignore="true" data-form-type="other" data-1p-ignore rows="3"></textarea>
                             </div>
                             <div class="tab-content" id="url-tab">
                                 <p class="td-dialog-message">ミュートするURLを入力してください<br>
                                 例: "https://example.com"<br>
                                 <small>※ Twitter短縮URL（t.co）も対応します</small></p>
-                                <input type="text" class="td-dialog-input" id="url-input" placeholder="URLを入力してください" autocomplete="off" data-lpignore="true" data-form-type="other" data-1p-ignore>
+                                <textarea class="td-dialog-input" id="url-input" placeholder="URLを入力してください" autocomplete="off" data-lpignore="true" data-form-type="other" data-1p-ignore rows="3"></textarea>
                             </div>
                             <div class="tab-content" id="user-keyword-tab">
                                 <p class="td-dialog-message">特定ユーザーのキーワードをミュートします<br>
                                 形式: "ユーザー名|キーワード"<br>
                                 例: "spamuser|広告", "botname|宣伝"<br>
                                 <small>※ @マークは不要です。必ず「|」で区切ってください</small></p>
-                                <input type="text" class="td-dialog-input" id="user-keyword-input" placeholder="ユーザー名|キーワード" autocomplete="off" data-lpignore="true" data-form-type="other" data-1p-ignore>
+                                <textarea class="td-dialog-input" id="user-keyword-input" placeholder="ユーザー名|キーワード" autocomplete="off" data-lpignore="true" data-form-type="other" data-1p-ignore rows="3"></textarea>
                             </div>
                             <div class="tab-content" id="user-regex-tab">
                                 <p class="td-dialog-message">特定ユーザーを正規表現でミュートします<br>
                                 例: "spam_.*", "bot[0-9]+"<br>
                                 <small>※ @マークは不要です</small></p>
-                                <input type="text" class="td-dialog-input" id="user-regex-input" placeholder="ユーザー名パターンを入力してください" autocomplete="off" data-lpignore="true" data-form-type="other" data-1p-ignore>
+                                <textarea class="td-dialog-input" id="user-regex-input" placeholder="ユーザー名パターンを入力してください" autocomplete="off" data-lpignore="true" data-form-type="other" data-1p-ignore rows="3"></textarea>
                             </div>
                             <div class="tab-content" id="remove-tab">
                                 <p class="td-dialog-message">削除するフィルター数を入力してください<br>

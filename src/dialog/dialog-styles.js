@@ -167,6 +167,24 @@ export function addDialogStyles() {
             border-color: #1d9bf0 !important;
         }
 
+        /* textarea専用スタイル - TweetDeckのCSSを強制上書き */
+        .td-dialog-container textarea.td-dialog-input {
+            min-height: 80px !important;
+            max-height: 200px !important;
+            height: auto !important;
+            resize: vertical !important;
+            line-height: 1.4 !important;
+            white-space: pre-wrap !important;
+            word-wrap: break-word !important;
+            overflow-y: auto !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+        }
+
+        /* 特定のtextarea要素にフォーカス時の追加スタイル */
+        .td-dialog-container textarea.td-dialog-input:focus {
+            box-shadow: 0 0 0 2px rgba(29, 155, 240, 0.2) !important;
+        }
+
         .td-dialog-container .td-dialog-footer {
             display: flex !important;
             justify-content: flex-end !important;
