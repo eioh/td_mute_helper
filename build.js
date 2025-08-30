@@ -26,6 +26,10 @@ const config = {
   banner: {
     js: banner
   },
+  loader: {
+    '.html': 'text',
+    '.css': 'text'
+  },
   // グローバル変数の設定（TamperMonkey環境用）
   define: {
     'process.env.NODE_ENV': mode === 'prod' ? '"production"' : '"development"'

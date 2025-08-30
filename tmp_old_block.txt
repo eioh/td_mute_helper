@@ -1,0 +1,29 @@
+```
+td_mute_helper/
+├── src/                          # 開発用ソースファイル
+━E  ├── main.js                  # エントリーポイント！E0行！E
+━E  ├── config.js                # 定数・設定！E0行！E
+━E  ├── userscript-header.txt    # UserScriptヘッダー
+━E  ├── utils/                   # ユーチE��リチE��関数
+━E  ━E  ├── sleep.js            # Promise-based delay�E�E0行！E
+━E  ━E  └── error-handling.js   # エラー処琁E��E0行！E
+━E  ├── dialog/                  # ダイアログ関連�E�E50行！E
+━E  ━E  ├── dialog-html.js      # HTML構造作�E
+━E  ━E  ├── dialog-styles.js    # CSSスタイル定義
+━E  ━E  └── dialog-controller.js # ダイアログ制御とPromise処琁E
+━E  ├── filters/                 # フィルター機�E�E�E00行！E
+━E  ━E  ├── mute-patterns.js    # パターン判定�E吁E��mute関数
+━E  ━E  ├── mute-operations.js  # メイン操作！Edd/remove�E�E
+━E  ━E  └── duplication.js      # 重褁E��ィルター検索
+━E  └── initialization.js       # 初期化�Eイベント設定！E0行！E
+├── dist/                        # ビルド�E果物�E�Eitignore対象�E�E
+━E  └── main.js                 # バンドル済みファイル
+├── plan/                        # 実裁E��画・設計ドキュメンチE
+━E  ├── file-splitting-plan.md
+━E  └── build-process.md
+├── main.js                      # リリース用最終ファイル�E�EamperMonkey配信用�E�E
+├── build.js                     # esbuildカスタムビルドスクリプト
+├── package.json                 # npm設定とスクリプト
+├── .gitignore
+└── README.md
+```
