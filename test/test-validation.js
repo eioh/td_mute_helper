@@ -6,7 +6,7 @@ import {
   muteUrl, 
   muteUserKeyword, 
   muteUserRegex 
-} from './src/filters/mute-patterns.js';
+} from '../src/filters/mute-patterns.js';
 
 // モックのMutePhrase関数とTD.controller.filterManager
 global.TD = {
