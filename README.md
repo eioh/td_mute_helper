@@ -192,17 +192,3 @@ npm run deploy
 ## ライセンス
 
 MIT License
-
----
-
-**Last Updated**: 2024
-
-## 変更履歴（HTML/CSS 分離）
-
-- ダイアログのマークアップとスタイルを JS 直書きから分離しました。
-  - 追加: `src/dialog/dialog.html`（ダイアログの HTML テンプレート）
-  - 追加: `src/dialog/dialog.css`（ダイアログの CSS スタイル）
-  - 変更: `src/dialog/dialog-html.js` が上記ファイルを読み込み、CSS を `<style data-td-dialog>` として挿入します。
-  - 削除: `src/dialog/dialog-styles.js`（不要になりました）
-- ビルド: `esbuild` のローダーで `.html`/`.css` を `text` として取り込み、最終的に `dist/main.js` にインライン化します。
-  - 設定は `build.js` 内 `loader: { '.html': 'text', '.css': 'text' }` を参照。
