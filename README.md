@@ -195,7 +195,7 @@ MIT License
 
 ---
 
-**Version**: 0.5
+**Version**: 0.7.0
 **Last Updated**: 2024
 
 ## 変更履歴（HTML/CSS 分離）

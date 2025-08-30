@@ -24,3 +24,7 @@ ehthumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# AI assistant local data (exclude from repo)
+.claude/
+.serena/

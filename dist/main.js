@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name td_mute_helper
 // @namespace http://tampermonkey.net/
-// @version 0.5
+// @version 0.7.0
 // @description try to take over the world!
 // @author You
 // @match https://tweetdeck.twitter.com
@@ -10,7 +10,8 @@
 // @updateURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/dist/main.js
 // @downloadURL https://raw.githubusercontent.com/eioh/td_mute_helper/main/dist/main.js
 // ==/UserScript==
-(()=>{var Y=Object.defineProperty;var h=(t,e)=>()=>(t&&(e=t(t=0)),e);var v=(t,e)=>{for(var r in e)Y(t,r,{get:e[r],enumerable:!0})};var I={};v(I,{DELAY_BETWEEN_OPERATIONS:()=>E,INITIALIZATION_DELAY:()=>k,VERSION:()=>w});var w,E,k,b=h(()=>{w="0.6.0",E=2e4,k=3e4});function d(t,e){console.error(`[TD Mute Helper] ${t}:`,e),alert(`\u30A8\u30E9\u30FC\u304C\u767A\u751F\u3057\u307E\u3057\u305F: ${t}`)}var x=h(()=>{});var H={};v(H,{getDuplication:()=>Q});function Q(){try{let t=TD.controller.filterManager.getAll(),e=t.length,r=[];for(let a=0;a<e;a++)for(let o=a+1;o<e;o++)t[a].type==t[o].type&&t[a].value==t[o].value&&r.push(t[a]);return r}catch(t){return d("\u91CD\u8907\u30D5\u30A3\u30EB\u30BF\u30FC\u691C\u7D22\u306B\u5931\u6557\u3057\u307E\u3057\u305F",t),[]}}var z=h(()=>{x()});var C={};v(C,{sleep:()=>X});var X,B=h(()=>{X=t=>new Promise(e=>setTimeout(e,t))});b();var U=`<div id="td-mute-dialog" class="td-dialog-overlay" style="display: none;">
+
+(()=>{var Y=Object.defineProperty;var h=(t,e)=>()=>(t&&(e=t(t=0)),e);var v=(t,e)=>{for(var r in e)Y(t,r,{get:e[r],enumerable:!0})};var I={};v(I,{DELAY_BETWEEN_OPERATIONS:()=>E,INITIALIZATION_DELAY:()=>k,VERSION:()=>w});var w,E,k,b=h(()=>{w="0.7.0",E=2e4,k=3e4});function d(t,e){console.error(`[TD Mute Helper] ${t}:`,e),alert(`\u30A8\u30E9\u30FC\u304C\u767A\u751F\u3057\u307E\u3057\u305F: ${t}`)}var x=h(()=>{});var H={};v(H,{getDuplication:()=>Q});function Q(){try{let t=TD.controller.filterManager.getAll(),e=t.length,r=[];for(let a=0;a<e;a++)for(let o=a+1;o<e;o++)t[a].type==t[o].type&&t[a].value==t[o].value&&r.push(t[a]);return r}catch(t){return d("\u91CD\u8907\u30D5\u30A3\u30EB\u30BF\u30FC\u691C\u7D22\u306B\u5931\u6557\u3057\u307E\u3057\u305F",t),[]}}var z=h(()=>{x()});var C={};v(C,{sleep:()=>X});var X,B=h(()=>{X=t=>new Promise(e=>setTimeout(e,t))});b();var U=`<div id="td-mute-dialog" class="td-dialog-overlay" style="display: none;">
   <div class="td-dialog-container">
     <div class="td-dialog-header">
       <h3 class="td-dialog-title">\u30DF\u30E5\u30FC\u30C8\u8A2D\u5B9A</h3>
