@@ -1,47 +1,47 @@
 # TD Mute Helper
 
-TweetDeck用ミュートフィルター管理TamperMonkeyスクリプト
+TweetDeck用ミュートフィルター管琁EamperMonkeyスクリプト
 
-## 概要
+## 概要E
 
-TweetDeckでのミュートフィルター管理を効率化するUserScriptです。HTMLベースのカスタムダイアログでユーザー体験を向上させ、複数のミュートパターン（URL、正規表現、ユーザー名等）に対応しています。
+TweetDeckでのミュートフィルター管琁E��効玁E��するUserScriptです、ETMLベ�Eスのカスタムダイアログでユーザー体験を向上させ、褁E��のミュートパターン�E�ERL、正規表現、ユーザー名等）に対応してぁE��す、E
 
-## 主な機能
+## 主な機�E
 
-- **6タブ統合ダイアログ**: 左右分割レイアウトでタイプ別の専用入力画面
-- **包括的バリデーション機能**: 入力形式の詳細検証と分かりやすいエラーメッセージ
-- **多様なミュートパターン対応**:
-  - **フレーズタブ**: 通常のキーワードミュート
-  - **正規表現タブ**: パターンマッチング (`/regex/` 形式)
-  - **URLタブ**: t.co短縮URLや通常URL
-  - **ユーザーキーワードタブ**: 特定ユーザーのキーワード (`user|keyword` 形式)
-  - **ユーザー正規表現タブ**: ユーザー名パターンマッチング
-  - **削除タブ**: 指定数のフィルター一括削除
-- **安全な操作設計**: 実行ボタンクリック時のみ処理実行（Enter誤操作防止）
-- **重複検出**: 重複するフィルターの自動検出と削除
+- **6タブ統合ダイアログ**: 左右刁E��レイアウトでタイプ別の専用入力画面
+- **匁E��皁E��リチE�Eション機�E**: 入力形式�E詳細検証と刁E��りやすいエラーメチE��ージ
+- **多様なミュートパターン対忁E*:
+  - **フレーズタチE*: 通常のキーワードミューチE
+  - **正規表現タチE*: パターンマッチング (`/regex/` 形弁E
+  - **URLタチE*: t.co短縮URLめE��常URL
+  - **ユーザーキーワードタチE*: 特定ユーザーのキーワーチE(`user|keyword` 形弁E
+  - **ユーザー正規表現タチE*: ユーザー名パターンマッチング
+  - **削除タチE*: 持E��数のフィルター一括削除
+- **安�Eな操作設訁E*: 実行�EタンクリチE��時�Eみ処琁E��行！Enter誤操作防止�E�E
+- **重褁E���E**: 重褁E��るフィルターの自動検�Eと削除
 
-## フォルダ構成
+## フォルダ構�E
 
 ```
 td_mute_helper/
 ├── src/ # 開発用ソースファイル
-  ├── main.js # エントリーポイント
-  ├── config.js # 定数・設定
+  ├── main.js # エントリーポインチE
+  ├── config.js # 定数・設宁E
   ├── userscript-header.txt # UserScript ヘッダー
-  ├── utils/ # ユーティリティ関数
+  ├── utils/ # ユーチE��リチE��関数
     ├── sleep.js
     └── error-handling.js
   ├── dialog/ # ダイアログ関連
-    ├── dialog.html # HTML テンプレート
+    ├── dialog.html # HTML チE��プレーチE
     ├── dialog.css # CSS スタイル
-    ├── dialog-html.js # ダイアログ生成と CSS 挿入
+    ├── dialog-html.js # ダイアログ生�Eと CSS 挿入
     └── dialog-controller.js # ダイアログ制御
-  ├── filters/ # フィルター機能
+  ├── filters/ # フィルター機�E
     ├── mute-patterns.js
     ├── mute-operations.js
     └── duplication.js
   └── initialization.js
-├── dist/ # ビルド成果物
+├── dist/ # ビルド�E果物
   └── main.js # バンドル済みファイル
 ├── build.js # esbuild カスタムビルドスクリプト
 ├── package.json # npm 設定とスクリプト
@@ -49,77 +49,77 @@ td_mute_helper/
 └── README.md
 ```
 
-## 技術スタック
+## 技術スタチE��
 
-- **バンドラー**: esbuild（高速ビルド）
+- **バンドラー**: esbuild�E�高速ビルド！E
 - **モジュール**: ES6 modules
-- **ターゲット**: ES2017（現代ブラウザ対応）
-- **出力形式**: IIFE（UserScript形式）
+- **ターゲチE��**: ES2017�E�現代ブラウザ対応！E
+- **出力形弁E*: IIFE�E�EserScript形式！E
 
-## セットアップ
+## セチE��アチE�E
 
-### 1. 依存関係のインストール
+### 1. 依存関係�Eインスト�Eル
 
 ```bash
 npm install
 ```
 
-### 2. 開発環境の起動（ウォッチモード）
+### 2. 開発環墁E�E起動（ウォチE��モード！E
 
 ```bash
 npm run dev
 ```
 
-ファイル変更を監視し、自動で `dist/main.js` にビルドします。
+ファイル変更を監視し、�E動で `dist/main.js` にビルドします、E
 
-### 3. 本番ビルド
+### 3. 本番ビルチE
 
 ```bash
 npm run build
 ```
 
-ミニファイ・最適化された `dist/main.js` を生成します。
+ミニファイ・最適化された `dist/main.js` を生成します、E
 
-### 4. デプロイ
+### 4. �z�z�iGitHub Raw ���Q�Ɓj
 
-```bash
-npm run deploy
-```
+Tampermonkey ��  `@updateURL` / `@downloadURL` �� `dist/main.js` ���w���Ă��܂��B`npm run build` ��Ƀv�b�V������Δz�z�����͊����ł��B 
 
-`dist/main.js` を `main.js` にコピーしてリリース準備完了です。
+
+
+`dist/main.js` めE`main.js` にコピ�Eしてリリース準備完亁E��す、E
 
 ## npm scripts
 
-| コマンド | 説明 |
+| コマンチE| 説昁E|
 |----------|------|
-| `npm run dev` | 開発モード（ファイル監視・ソースマップ有効） |
-| `npm run build` | 本番ビルド（ミニファイ・最適化） |
-| `npm run deploy` | dist/main.js → main.js コピー |
-| `npm run backup` | main.js のバックアップ作成 |
-| `npm run clean` | dist/ ディレクトリクリア |
-| `npm run test` | テスト実行 |
+| `npm run dev` | 開発モード（ファイル監視�Eソースマップ有効�E�E|
+| `npm run build` | 本番ビルド（ミニファイ・最適化！E|
+| �i�폜�j | �ȑO�� deploy�idist��main.js �R�s�[�j�͔p�~ |
+
+|  `npm run clean` | dist/ �f�B���N�g���N���A | 
+| `npm run test` | チE��ト実衁E|
 
 ## 開発フロー
 
-### 日常的な開発
-1. `npm run dev` でウォッチモード開始
-2. `src/` 内のファイルを編集
+### 日常皁E��開発
+1. `npm run dev` でウォチE��モード開姁E
+2. `src/` 冁E�Eファイルを編雁E
 3. 自動で `dist/main.js` がビルドされる
-4. TamperMonkeyで `dist/main.js` をテスト
+4. TamperMonkeyで `dist/main.js` をテスチE
 
 ### リリース準備
-1. `npm run build` で最終ビルド
-2. `dist/main.js` で動作確認
+1. `npm run build` で最終ビルチE
+2. `dist/main.js` で動作確誁E
 3. `npm run deploy` でリリースファイル準備
-4. Gitコミット・プッシュ
+3. �i�p�~�j `npm run deploy` �Ń����[�X�t�@�C������ 
 
-## ビルド出力
+## ビルド�E劁E
 
-- **開発版**: ソースマップ付き、非圧縮
-- **本番版**: ミニファイ済み、約9.8KB
+- **開発牁E*: ソースマップ付き、E��圧縮
+- **本番牁E*: ミニファイ済み、紁E.8KB
 - **UserScriptヘッダー**: 自動挿入
 
-## TamperMonkey設定
+## TamperMonkey設宁E
 
 ```javascript
 // ==UserScript==
@@ -136,57 +136,57 @@ npm run deploy
 // ==/UserScript==
 ```
 
-## 使用方法
+## 使用方況E
 
-### 統合ダイアログの起動
-1. TweetDeckで `.visible-in-contracted-header` 要素をクリック
-2. 6タブ統合ダイアログが表示される
-3. 左側のタブで処理タイプを選択
+### 統合ダイアログの起勁E
+1. TweetDeckで `.visible-in-contracted-header` 要素をクリチE��
+2. 6タブ統合ダイアログが表示されめE
+3. 左側のタブで処琁E��イプを選抁E
 
-### 各タブの使用方法
+### 吁E��ブ�E使用方況E
 
-| タブ | 入力形式 | 例 | 処理内容 |
+| タチE| 入力形弁E| 侁E| 処琁E�E容 |
 |------|----------|-----|----------|
-| **フレーズ** | 2文字以上のキーワード | `スパム`、`広告` | 通常のphrase フィルター追加 |
-| **正規表現** | 正規表現パターン | `RT.*セール`、`.*限定.*` | BTD_regex フィルター追加 |
-| **URL** | 完全なURL | `https://example.com`、`https://t.co/abc123` | URL/t.co処理してphrase追加 |
-| **ユーザーキーワード** | `ユーザー名\|キーワード` | `spamuser\|広告` | BTD_mute_user_keyword追加 |
-| **ユーザー正規表現** | ユーザー名パターン | `spam_.*`、`bot[0-9]+` | BTD_user_regex追加（重複削除後） |
-| **削除** | 正の整数 | `5`、`10` | 指定数のフィルターを20秒間隔で削除 |
+| **フレーズ** | 2斁E��以上�EキーワーチE| `スパム`、`庁E��` | 通常のphrase フィルター追加 |
+| **正規表現** | 正規表現パターン | `RT.*セール`、`.*限宁E*` | BTD_regex フィルター追加 |
+| **URL** | 完�EなURL | `https://example.com`、`https://t.co/abc123` | URL/t.co処琁E��てphrase追加 |
+| **ユーザーキーワーチE* | `ユーザー名\|キーワード` | `spamuser\|庁E��` | BTD_mute_user_keyword追加 |
+| **ユーザー正規表現** | ユーザー名パターン | `spam_.*`、`bot[0-9]+` | BTD_user_regex追加�E�重褁E��除後！E|
+| **削除** | 正の整数 | `5`、`10` | 持E��数のフィルターめE0秒間隔で削除 |
 
-### 操作手順
-1. **タブ選択**: 左側でミュートタイプを選択
-2. **内容入力**: 右側の入力欄で対象を入力
-3. **実行確認**: 「実行」ボタンクリックで処理開始
-4. **エラー対応**: バリデーションエラーは詳細メッセージで確認
+### 操作手頁E
+1. **タブ選抁E*: 左側でミュートタイプを選抁E
+2. **冁E��入劁E*: 右側の入力欁E��対象を�E劁E
+3. **実行確誁E*: 「実行」�EタンクリチE��で処琁E��姁E
+4. **エラー対忁E*: バリチE�Eションエラーは詳細メチE��ージで確誁E
 
-### バリデーション機能
-- **入力形式チェック**: 各タブで適切な形式かを自動検証
-- **詳細エラーメッセージ**: 修正方法と例を含む分かりやすい説明
-- **安全操作**: Enterキーでの誤実行を防止、実行ボタンのみ有効
+### バリチE�Eション機�E
+- **入力形式チェチE��**: 吁E��ブで適刁E��形式かを�E動検証
+- **詳細エラーメチE��ージ**: 修正方法と例を含む刁E��りやすい説昁E
+- **安�E操佁E*: Enterキーでの誤実行を防止、実行�Eタンのみ有効
 
-## トラブルシューティング
+## トラブルシューチE��ング
 
 ### ビルドエラー
-- Node.jsバージョン確認（推奨: 16+）
-- `npm install` で依存関係再インストール
-- `npm run clean` でdistクリア後再ビルド
+- Node.jsバ�Eジョン確認（推奨: 16+�E�E
+- `npm install` で依存関係�Eインスト�Eル
+- `npm run clean` でdistクリア後�EビルチE
 
-### 動作しない場合
-- ブラウザコンソールでエラー確認
+### 動作しなぁE��吁E
+- ブラウザコンソールでエラー確誁E
 - TweetDeckのDOM構造変更の可能性
-- UserScriptの有効化確認
+- UserScriptの有効化確誁E
 
 ## 貢献・開発
 
 ### コード品質
-- ESLint設定済み（将来）
-- ファイルサイズ監視機能内蔵
-- 各モジュールの責務を明確に分離
+- ESLint設定済み�E�封E���E�E
+- ファイルサイズ監視機�E冁E��
+- 吁E��ジュールの責務を明確に刁E��
 
-### 将来の拡張
-- TypeScript対応検討
-- テストフレームワーク導入
+### 封E��の拡張
+- TypeScript対応検訁E
+- チE��トフレームワーク導�E
 - GitHub Actions CI/CD
 
 ## ライセンス

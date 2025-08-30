@@ -12,7 +12,6 @@
 - 開発ビルド: `npm run dev`（監視 + ソースマップ）
 - 本番ビルド: `npm run build`（最適化 + ミニファイ）
 - テスト実行: `npm run test`
-- 配布反映: `npm run deploy`（`dist/main.js` → `main.js`）
 
 ## バージョン管理（Single Source of Truth）
 - 変更は原則 `package.json` の `version` のみを更新する。
@@ -51,7 +50,7 @@
   - `main`: リリース用。タグ（`vX.Y.Z`）を付与。
   - `develop`: 統合用。日常開発や PR の取り込み先。
   - 機能追加はトピックブランチを切って `develop` へ PR。
-- 配布物: タグ発行時点の `dist/main.js` が最新配布物になるようビルド。
+- 配布物: タグ発行時点の `dist/main.js` が最新配布物（`@updateURL`/`@downloadURL` も `dist/main.js` を指す）。
 
 ## 追跡除外と秘匿
 - `.gitignore` で除外: `.claude/`, `.serena/`, `node_modules/`, ログ／一時ファイル 等
@@ -88,4 +87,3 @@
 
 ---
 質問や追加の運用ルールが必要な場合は、README か本ファイルに追記してください。
-
