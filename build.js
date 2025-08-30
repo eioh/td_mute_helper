@@ -7,8 +7,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const mode = process.argv.includes('--mode=prod') ? 'prod' : 'dev'
 
-// UserScript headerを読み込み
-const banner = fs.readFileSync(path.join(__dirname, 'src', 'userscript-header.txt'), 'utf8')
+// UserScript headerを読み込み、package.jsonのversionで@version行を上書き
+const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf8'))
+const rawHeader = fs.readFileSync(path.join(__dirname, 'src', 'userscript-header.txt'), 'utf8')
+const banner = rawHeader.replace(/^\/\/\s*@version.*$/m, `// @version ${pkg.version}`)
 
 // distディレクトリが存在しない場合は作成
 const distDir = path.join(__dirname, 'dist')
@@ -32,7 +34,8 @@ const config = {
   },
   // グローバル変数の設定（TamperMonkey環境用）
   define: {
-    'process.env.NODE_ENV': mode === 'prod' ? '"production"' : '"development"'
+    'process.env.NODE_ENV': mode === 'prod' ? '"production"' : '"development"',
+    __VERSION__: JSON.stringify(pkg.version)
   }
 }
 
