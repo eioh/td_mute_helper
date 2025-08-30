@@ -87,3 +87,34 @@
 
 ---
 è³ªå•ã‚„è¿½åŠ ã®é‹ç”¨ãƒ«ãƒ¼ãƒ«ãŒå¿…è¦ãªå ´åˆã¯ã€README ã‹æœ¬ãƒ•ã‚¡ã‚¤ãƒ«ã«è¿½è¨˜ã—ã¦ãã ã•ã„ã€‚
+## Git ‰^—pƒ‹[ƒ‹imain ’¼ƒRƒ~ƒbƒg‹Ö~j
+- Œ´‘¥: `main` ‚Í `develop` ‚©‚ç‚Ìƒ}[ƒW‚Ì‚İB`main` ‚Å’¼ÚƒRƒ~ƒbƒgE’¼Ú push ‚Í‚µ‚È‚¢B
+- ƒŠƒ‚[ƒgiGitHubj‚Å‚Ì„§İ’è: ƒuƒ‰ƒ“ƒ`•ÛŒì‚ÅuPR •K{vuÅV‚Ìó‘Ô•K{iup to datejvuƒXƒe[ƒ^ƒXƒ`ƒFƒbƒN•K{vuforce push ‹Ö~v‚ğ—LŒø‰»B
+- ƒ[ƒJƒ‹‚ÌˆÀ‘Sôi”CˆÓj:
+  - `.git/hooks/pre-commit`imain ’¼ƒRƒ~ƒbƒg‚ğ‹‘”Ûj
+    ```bash
+    #!/usr/bin/env bash
+    branch=$(git rev-parse --abbrev-ref HEAD)
+    if [ "$branch" = "main" ]; then
+      echo "main ’¼ƒRƒ~ƒbƒg‚Í‹Ö~‚Å‚·Bdevelop ‚ÖƒRƒ~ƒbƒg‚µ‚Ä‚­‚¾‚³‚¢B"
+      exit 1
+    fi
+    ```
+  - `.git/hooks/pre-push`imain ‚Ö‚Ì’¼Ú push ‚ğ‹‘”Ûj
+    ```bash
+    #!/usr/bin/env bash
+    while read local_ref local_sha remote_ref remote_sha; do
+      if [[ "$remote_ref" =~ refs/heads/main ]]; then
+        echo "main ‚Ö‚Ì’¼Ú push ‚Í‹Ö~‚Å‚·BPR Œo—R‚Åƒ}[ƒW‚µ‚Ä‚­‚¾‚³‚¢B"
+        exit 1
+      fi
+    done
+    ```
+  - ÀsŒ ŒÀ: `chmod +x .git/hooks/pre-commit .git/hooks/pre-push`
+
+## ƒo[ƒWƒ‡ƒ“ƒ^ƒO‚Ì‰^—p
+- ƒXƒNƒŠƒvƒg‚Ìƒo[ƒWƒ‡ƒ“‚ğã‚°‚½‚çA•K‚¸ƒ^ƒO‚ğì¬‚µ‚Äƒ^ƒO‚à push ‚·‚éB
+  - —áivX.Y.Z ‚Ìê‡j:
+    - `git tag -a vX.Y.Z -m "vX.Y.Z"`
+    - `git push origin vX.Y.Z`
+- ƒIƒvƒVƒ‡ƒ“: `npm version patch|minor|major` ‚ğg‚¤‚Æ `package.json` ‚ÌXV{ƒ^ƒOì¬‚Ü‚Å©“®‰»‚Å‚«‚éB
