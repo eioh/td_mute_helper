@@ -16,24 +16,45 @@ export function showCustomDialog () {
     dialog = createDialogHTML()
     document.body.appendChild(dialog)
 
-    // タイトル横に現在のフィルタ件数を表示（遅延初期化にも対応）
-    const countEl = dialog.querySelector('.td-dialog-title-count')
-    const refreshCount = () => {
-      try {
-        if (!countEl) return
-        const count = TD.controller.filterManager.getAll()?.length || 0
-        countEl.textContent = `(${count}件)`
-      } catch (_) {
-        // 取得に失敗した場合は無表示のまま
-        console.log(
-          `[TD Mute Helper] フィルター件数の取得に失敗しました: ${_.message}`
-        )
+    // 各タブラベルに件数を表示（ダイアログオープン時点）
+    try {
+      const list = TD.controller.filterManager.getAll() || []
+
+      const counts = {
+        phrase: list.filter(v => v && v.type === 'phrase').length,
+        regex: list.filter(v => v && v.type === 'BTD_regex').length,
+        userKeyword: list.filter(v => v && v.type === 'BTD_mute_user_keyword')
+          .length,
+        userRegex: list.filter(v => v && v.type === 'BTD_user_regex').length,
+        url: list.filter(
+          v =>
+            v &&
+            v.type === 'phrase' &&
+            typeof v.value === 'string' &&
+            /^https?:\/\//.test(v.value)
+        ).length
       }
+
+      const setTabCount = (name, count) => {
+        const btn = dialog.querySelector(`.td-dialog-tab[data-tab="${name}"]`)
+        if (!btn) return
+        let el = btn.querySelector('.td-tab-count')
+        if (!el) {
+          el = document.createElement('span')
+          el.className = 'td-tab-count'
+          btn.appendChild(el)
+        }
+        el.textContent = `(${count}件)`
+      }
+
+      setTabCount('phrase', counts.phrase)
+      setTabCount('regex', counts.regex)
+      setTabCount('url', counts.url)
+      setTabCount('user-keyword', counts.userKeyword)
+      setTabCount('user-regex', counts.userRegex)
+    } catch (_) {
+      // TD未初期化などは無視
     }
-    // 即時 + 少し遅らせて再評価（TDの初期化タイミング対策）
-    refreshCount()
-    setTimeout(refreshCount, 200)
-    setTimeout(refreshCount, 800)
 
     // ダイアログの各要素を取得
     const cancelButton = dialog.querySelector('.td-dialog-cancel')

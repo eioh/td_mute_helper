@@ -1,6 +1,6 @@
 {
   "name": "td_mute_helper",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "TweetDeck mute helper TamperMonkey script",
   "main": "dist/main.js",
   "type": "module",
