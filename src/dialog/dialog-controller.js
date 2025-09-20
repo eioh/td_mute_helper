@@ -94,6 +94,8 @@ export function showCustomDialog () {
         case 'phrase':
         case 'regex':
         case 'url':
+          // URLタブは空チェックのみ。詳細なURL検証はmuteUrl側に委譲
+          return value.trim() !== ''
         case 'user-regex': {
           const v = value.trim()
           if (v === '') return false
