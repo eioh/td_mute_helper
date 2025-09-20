@@ -16,13 +16,32 @@ export function showCustomDialog () {
     dialog = createDialogHTML()
     document.body.appendChild(dialog)
 
+    // タイトル横に現在のフィルタ件数を表示（遅延初期化にも対応）
+    const countEl = dialog.querySelector('.td-dialog-title-count')
+    const refreshCount = () => {
+      try {
+        if (!countEl) return
+        const count = TD.controller.filterManager.getAll()?.length || 0
+        countEl.textContent = `(${count}件)`
+      } catch (_) {
+        // 取得に失敗した場合は無表示のまま
+        console.log(
+          `[TD Mute Helper] フィルター件数の取得に失敗しました: ${_.message}`
+        )
+      }
+    }
+    // 即時 + 少し遅らせて再評価（TDの初期化タイミング対策）
+    refreshCount()
+    setTimeout(refreshCount, 200)
+    setTimeout(refreshCount, 800)
+
     // ダイアログの各要素を取得
     const cancelButton = dialog.querySelector('.td-dialog-cancel')
     const confirmButton = dialog.querySelector('.td-dialog-confirm')
     const closeButton = dialog.querySelector('.td-dialog-close')
     const tabs = dialog.querySelectorAll('.td-dialog-tab')
     const tabContents = dialog.querySelectorAll('.tab-content')
-    
+
     // 各タブの入力フィールドを取得
     const inputs = {
       phrase: dialog.querySelector('#phrase-input'),
@@ -40,17 +59,17 @@ export function showCustomDialog () {
       tab.addEventListener('click', () => {
         const tabName = tab.dataset.tab
         currentTab = tabName
-        
+
         // タブの状態更新
         tabs.forEach(t => t.classList.remove('active'))
         tab.classList.add('active')
-        
+
         // コンテンツの表示切り替え
         tabContents.forEach(content => {
           content.classList.remove('active')
         })
         dialog.querySelector(`#${tabName}-tab`).classList.add('active')
-        
+
         // 対応する入力フィールドにフォーカス
         const activeInput = getCurrentInput()
         if (activeInput) {
@@ -62,22 +81,37 @@ export function showCustomDialog () {
     // 現在のタブの入力フィールドを取得する関数
     const getCurrentInput = () => {
       switch (currentTab) {
-        case 'phrase': return inputs.phrase
-        case 'regex': return inputs.regex
-        case 'url': return inputs.url
-        case 'user-keyword': return inputs.userKeyword
-        case 'user-regex': return inputs.userRegex
-        case 'remove': return inputs.remove
-        default: return null
+        case 'phrase':
+          return inputs.phrase
+        case 'regex':
+          return inputs.regex
+        case 'url':
+          return inputs.url
+        case 'user-keyword':
+          return inputs.userKeyword
+        case 'user-regex':
+          return inputs.userRegex
+        case 'remove':
+          return inputs.remove
+        default:
+          return null
       }
     }
 
     // 指定のURLからユーザー名を抽出するヘルパー
-    const extractUsernameFromTwitterUrl = (text) => {
+    const extractUsernameFromTwitterUrl = text => {
       try {
         const url = new URL(text)
         const host = (url.hostname || '').toLowerCase()
-        if (!(host === 'twitter.com' || host === 'www.twitter.com' || host === 'x.com' || host === 'www.x.com')) return null
+        if (
+          !(
+            host === 'twitter.com' ||
+            host === 'www.twitter.com' ||
+            host === 'x.com' ||
+            host === 'www.x.com'
+          )
+        )
+          return null
         const segments = url.pathname.split('/').filter(Boolean)
         if (segments.length === 0) return null
         const username = segments[0]
@@ -102,7 +136,9 @@ export function showCustomDialog () {
           if (/^https?:\/\//i.test(v)) {
             const username = extractUsernameFromTwitterUrl(v)
             if (!username) {
-              alert('無効なURLです。次の形式で入力してください:\nhttps://twitter.com/<ユーザー名>/... または https://x.com/<ユーザー名>/...')
+              alert(
+                '無効なURLです。次の形式で入力してください:\nhttps://twitter.com/<ユーザー名>/... または https://x.com/<ユーザー名>/...'
+              )
               return false
             }
           }
@@ -114,9 +150,15 @@ export function showCustomDialog () {
             return false
           }
           const parts = trimmed.split('|')
-          return parts.length === 2 && parts[0].trim() !== '' && parts[1].trim() !== ''
+          return (
+            parts.length === 2 &&
+            parts[0].trim() !== '' &&
+            parts[1].trim() !== ''
+          )
         case 'remove':
-          return value.trim() !== '' && !isNaN(Number(value)) && Number(value) > 0
+          return (
+            value.trim() !== '' && !isNaN(Number(value)) && Number(value) > 0
+          )
         default:
           return false
       }
@@ -147,7 +189,7 @@ export function showCustomDialog () {
 
     // ダイアログを表示
     dialog.style.display = 'flex'
-    
+
     // 最初の入力欄にフォーカス
     setTimeout(() => inputs.phrase.focus(), 100)
 
@@ -162,14 +204,14 @@ export function showCustomDialog () {
       if (!currentInput) return
 
       const inputValue = currentInput.value
-      
+
       if (!validateInput(currentTab, inputValue)) {
         currentInput.focus()
         return
       }
 
       closeDialog()
-      
+
       if (currentTab === 'remove') {
         resolve({ action: 'remove', value: Number(inputValue.trim()) })
       } else {
@@ -192,14 +234,14 @@ export function showCustomDialog () {
     // 全ての入力フィールドにキーボード操作を追加（Escapeのみ）
     Object.values(inputs).forEach(input => {
       if (input) {
-        input.addEventListener('keydown', (e) => {
+        input.addEventListener('keydown', e => {
           if (e.key === 'Escape') cancelAction()
         })
       }
     })
 
     // オーバーレイクリックで閉じる
-    dialog.addEventListener('click', (e) => {
+    dialog.addEventListener('click', e => {
       if (e.target === dialog) cancelAction()
     })
   })
