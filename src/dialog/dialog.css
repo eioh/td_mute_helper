@@ -38,6 +38,20 @@
   font-weight: 600 !important;
 }
 
+/* タイトル横の件数表示 */
+.td-dialog-container .td-dialog-title-count {
+  color: #8b98a5 !important; /* 薄いグレー */
+  font-size: 0.9em !important; /* タイトルより少し小さめ */
+  margin-left: 8px !important;
+}
+
+/* タブの件数表示 */
+.td-dialog-container .td-dialog-tab .td-tab-count {
+  color: #8b98a5 !important;
+  font-size: 0.9em !important;
+  margin-left: 6px !important;
+}
+
 .td-dialog-container .td-dialog-close {
   background: none !important;
   border: none !important;
