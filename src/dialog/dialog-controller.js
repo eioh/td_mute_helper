@@ -134,14 +134,40 @@ export function showCustomDialog () {
       }
     }
 
+    // 指定のURLからユーザー名を抽出するヘルパー
+    const extractUsernameFromTwitterUrl = (text) => {
+      try {
+        const url = new URL(text)
+        const host = (url.hostname || '').toLowerCase()
+        if (!(host === 'twitter.com' || host === 'www.twitter.com' || host === 'x.com' || host === 'www.x.com')) return null
+        const segments = url.pathname.split('/').filter(Boolean)
+        if (segments.length === 0) return null
+        const username = segments[0]
+        if (!/^[A-Za-z0-9_]{1,15}$/.test(username)) return null
+        return username
+      } catch (_) {
+        return null
+      }
+    }
+
     // 入力値を検証する関数
     const validateInput = (tab, value) => {
       switch (tab) {
         case 'phrase':
         case 'regex':
         case 'url':
-        case 'user-regex':
-          return value.trim() !== ''
+        case 'user-regex': {
+          const v = value.trim()
+          if (v === '') return false
+          if (/^https?:\/\//i.test(v)) {
+            const username = extractUsernameFromTwitterUrl(v)
+            if (!username) {
+              alert('無効なURLです。次の形式で入力してください:\nhttps://twitter.com/<ユーザー名>/... または https://x.com/<ユーザー名>/...')
+              return false
+            }
+          }
+          return true
+        }
         case 'user-keyword':
           const trimmed = value.trim()
           if (trimmed === '' || !trimmed.includes('|')) {
@@ -169,8 +195,13 @@ export function showCustomDialog () {
         case 'phrase':
         case 'url':
         case 'user-keyword':
-        case 'user-regex':
+        case 'user-regex': {
+          if (/^https?:\/\//i.test(trimmedValue)) {
+            const username = extractUsernameFromTwitterUrl(trimmedValue)
+            if (username) return username
+          }
           return trimmedValue
+        }
         case 'regex':
           return `/${trimmedValue}/`
         case 'remove':
