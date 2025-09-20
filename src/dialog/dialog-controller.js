@@ -16,28 +16,6 @@ export function showCustomDialog () {
     dialog = createDialogHTML()
     document.body.appendChild(dialog)
 
-    // タイトル横に現在のフィルタ件数を表示（遅延初期化にも対応）
-    const countEl = dialog.querySelector('.td-dialog-title-count')
-    const refreshCount = () => {
-      try {
-        if (!countEl) return
-        // const getAll = window?.TD?.controller?.filterManager?.getAll
-        // const list = typeof getAll === 'function' ? getAll() : null
-        // getAll() は Array ではなく配列風オブジェクトを返す場合があるため length を直接参照
-        const count = TD.controller.filterManager.getAll()?.length || 0
-        countEl.textContent = `(${count}件)`
-      } catch (_) {
-        // 取得に失敗した場合は無表示のまま
-        console.log(
-          `[TD Mute Helper] フィルター件数の取得に失敗しました: ${_.message}`
-        )
-      }
-    }
-    // 即時 + 少し遅らせて再評価（TDの初期化タイミング対策）
-    refreshCount()
-    setTimeout(refreshCount, 200)
-    setTimeout(refreshCount, 800)
-
     // 各タブラベルに件数を表示（ダイアログオープン時点）
     try {
       const list = TD.controller.filterManager.getAll() || []
@@ -45,9 +23,16 @@ export function showCustomDialog () {
       const counts = {
         phrase: list.filter(v => v && v.type === 'phrase').length,
         regex: list.filter(v => v && v.type === 'BTD_regex').length,
-        userKeyword: list.filter(v => v && v.type === 'BTD_mute_user_keyword').length,
+        userKeyword: list.filter(v => v && v.type === 'BTD_mute_user_keyword')
+          .length,
         userRegex: list.filter(v => v && v.type === 'BTD_user_regex').length,
-        url: list.filter(v => v && v.type === 'phrase' && typeof v.value === 'string' && /^https?:\/\//.test(v.value)).length
+        url: list.filter(
+          v =>
+            v &&
+            v.type === 'phrase' &&
+            typeof v.value === 'string' &&
+            /^https?:\/\//.test(v.value)
+        ).length
       }
 
       const setTabCount = (name, count) => {
@@ -135,11 +120,19 @@ export function showCustomDialog () {
     }
 
     // 指定のURLからユーザー名を抽出するヘルパー
-    const extractUsernameFromTwitterUrl = (text) => {
+    const extractUsernameFromTwitterUrl = text => {
       try {
         const url = new URL(text)
         const host = (url.hostname || '').toLowerCase()
-        if (!(host === 'twitter.com' || host === 'www.twitter.com' || host === 'x.com' || host === 'www.x.com')) return null
+        if (
+          !(
+            host === 'twitter.com' ||
+            host === 'www.twitter.com' ||
+            host === 'x.com' ||
+            host === 'www.x.com'
+          )
+        )
+          return null
         const segments = url.pathname.split('/').filter(Boolean)
         if (segments.length === 0) return null
         const username = segments[0]
@@ -156,13 +149,17 @@ export function showCustomDialog () {
         case 'phrase':
         case 'regex':
         case 'url':
+          // URLタブは空チェックのみ。詳細なURL検証はmuteUrl側に委譲
+          return value.trim() !== ''
         case 'user-regex': {
           const v = value.trim()
           if (v === '') return false
           if (/^https?:\/\//i.test(v)) {
             const username = extractUsernameFromTwitterUrl(v)
             if (!username) {
-              alert('無効なURLです。次の形式で入力してください:\nhttps://twitter.com/<ユーザー名>/... または https://x.com/<ユーザー名>/...')
+              alert(
+                '無効なURLです。次の形式で入力してください:\nhttps://twitter.com/<ユーザー名>/... または https://x.com/<ユーザー名>/...'
+              )
               return false
             }
           }
